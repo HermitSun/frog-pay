@@ -24,3 +24,45 @@
     font-weight: bold;
     color: #909399;
 }
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.font-small {
+    font-size: 12px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.not-important {
+    color: #C0C4CC;
+}
+
+.has-border {
+    border: 1px solid #C0C4CC;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.round-border {
+    border: 1px solid #C0C4CC;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.important-title {
+    color: #D84315;
+    font-weight: bold;
+    font-size: 25px;
+}
