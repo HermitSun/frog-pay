@@ -48,6 +48,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default {
     name: 'PaymentForm',
     filters: {
@@ -90,6 +92,24 @@
       paymentMethod () {
         return this.rechargeForm.rechargeMethod
       }
+    },
+    watch: {
+      paymentAmount: {
+        handler () {
+          this.updatePaymentAmount(this.paymentAmount)
+        }
+      },
+      paymentMethod: {
+        handler () {
+          this.updatePaymentMethod(this.paymentMethod)
+        }
+      }
+    },
+    methods: {
+      ...mapActions({
+        updatePaymentAmount: 'updatePaymentAmount',
+        updatePaymentMethod: 'updatePaymentMethod'
+      })
     }
   }
 </script>

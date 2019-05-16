@@ -46,6 +46,7 @@
       </div>
       <br/>
       <br/>
+      <!--支付表单-->
       <PaymentForm ref="paymentForm"></PaymentForm>
       <el-divider></el-divider>
       <!--底部支付栏-->
@@ -72,6 +73,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import PaymentDialog from '@/components/PaymentDialog'
   import PaymentForm from '@/components/PaymentForm'
 
@@ -83,19 +85,23 @@
         username: '测试账号',
         userAvatar: require('./images/avatar.jpg'),
         balance: 1000, // 余额
-        showPayment: false, // 是否显示支付框
-        paymentAmount: 0,
-        paymentMethod: ''
+        showPayment: false // 是否显示支付框
       }
+    },
+    computed: {
+      ...mapState({
+        paymentAmount: 'paymentAmount',
+        paymentMethod: 'paymentMethod'
+      })
     },
     methods: {
       doPay () {
         // 调支付接口在支付框里
         // 获取应付金额和进行表单验证
+        // TODO:这里的内容耦合我解决不了。真的是语言机制的问题吗？
         const paymentForm = this.$refs['paymentForm']
-        this.paymentAmount = paymentForm.paymentAmount
-        this.paymentMethod = paymentForm.paymentMethod
-        paymentForm.$refs['paymentChildForm'].validate((valid) => {
+        const paymentChildForm = paymentForm.$refs['paymentChildForm']
+        paymentChildForm.validate((valid) => {
           if (valid) {
             this.showPayment = true
           } else {

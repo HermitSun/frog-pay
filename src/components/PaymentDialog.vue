@@ -1,8 +1,8 @@
 <template>
   <el-dialog :visible.sync="dialogVisible"
              :before-close="handleDialogClose">
-    <p>{{type}}</p>
-    <p>{{amount}}</p>
+    <p>{{paymentAmount}}</p>
+    <p>{{paymentMethod}}</p>
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="handleDialogClose">取 消</el-button>
@@ -13,17 +13,23 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
     name: 'PaymentDialog',
     props: {
-      showPayment: Boolean,
-      type: String,
-      amount: String
+      showPayment: Boolean
     },
     data () {
       return {
         dialogVisible: this.showPayment
       }
+    },
+    computed: {
+      ...mapState({
+        paymentAmount: 'paymentAmount',
+        paymentMethod: 'paymentMethod'
+      })
     },
     methods: {
       doPay () {
