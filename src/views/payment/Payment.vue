@@ -1,5 +1,7 @@
 <template>
-  <p>这是支付页</p>
+  <el-card class="wrapper">
+
+  </el-card>
 </template>
 
 <script>

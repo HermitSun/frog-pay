@@ -7,7 +7,7 @@ export default [
   {
     path: '/payment/:id',
     name: '支付',
-    component: () => import('@/views/Payment.vue')
+    component: () => import('@/views/payment/Payment.vue')
   },
   {
     path: '/not-found',
