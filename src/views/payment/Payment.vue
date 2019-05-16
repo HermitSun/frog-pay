@@ -1,4 +1,5 @@
 <template>
+  <!--TODO:用表单重构-->
   <el-card class="wrapper">
     <template #header>
       <el-row type="flex" justify="start">
@@ -97,6 +98,7 @@
         </el-col>
       </el-row>
       <el-divider></el-divider>
+      <!--底部支付栏-->
       <el-row>
         <el-col :span="4" :offset="1">
           <el-button type="primary"
@@ -109,13 +111,21 @@
           </div>
         </el-col>
       </el-row>
+      <!--支付界面-->
+      <!--利用v-if销毁来重建组件的生命周期，因为prop只会在生命周期开始时传递一次-->
+      <PaymentDialog v-if="showPayment"
+                     :show-payment.sync="showPayment"
+                     :type="rechargeMethod"></PaymentDialog>
     </div>
   </el-card>
 </template>
 
 <script>
+  import PaymentDialog from '@/components/PaymentDialog'
+
   export default {
     name: 'Payment',
+    components: { PaymentDialog },
     filters: {
       formatMoney (money) {
         money = Number(money)
@@ -129,7 +139,8 @@
         balance: 1000, // 余额
         rechargeAmount: '10', // 充值金额
         customRechargeAmount: '', // 自定义充值金额，分开是为了页面效果
-        rechargeMethod: '' // 支付方式
+        rechargeMethod: '', // 支付方式
+        showPayment: false // 是否显示支付框
       }
     },
     computed: {
@@ -148,7 +159,16 @@
     },
     methods: {
       doPay () {
-        // 调支付接口
+        // 调支付接口在支付框里
+        if (!this.rechargeAmount && !this.customRechargeAmount) {
+          this.$message.error('请选择充值金额')
+          return
+        }
+        if (!this.rechargeMethod) {
+          this.$message.error('请选择支付方式')
+          return
+        }
+        this.showPayment = true
       }
     }
   }
