@@ -1,29 +1,16 @@
 # frog-pay
 
-## Project setup
-```
-npm install
-```
+不知道是什么公司的介绍页和支付页，据说是为了申请支付接口。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+等着相应的资料，目前全是mock。
 
-### Compiles and minifies for production
-```
-npm run build
-```
+快速建站，启动！
 
-### Run your tests
-```
-npm run test
-```
+这个里面使用的东西有：
 
-### Lints and fixes files
-```
-npm run lint
-```
+- Vue（cli3 + router + Vuex）
+- Element-UI
+- 语言是加了babel的JS（ES6还是香啊）
+- 代码规范遵守vue-standard
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+提前说一下，以免后续接手的人喷我。
