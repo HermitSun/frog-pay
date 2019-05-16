@@ -4,7 +4,7 @@ import Vue from 'vue'
 import axios from 'axios'
 
 axios.defaults.baseURL = process.env.NODE_ENV === 'production'
-  ? 'http://101.132.35.81:3141' // 此处应换成提供的服务器IP
+  ? 'http://39.100.41.101:3141'
   : 'http://localhost:3141'
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
