@@ -1,5 +1,4 @@
 <template>
-  <!--TODO:用表单重构-->
   <el-card class="wrapper">
     <template #header>
       <el-row type="flex" justify="start">
@@ -47,56 +46,7 @@
       </div>
       <br/>
       <br/>
-      <!--充值金额-->
-      <el-row>
-        <el-col :span="3">
-          <span class="font-small recharge-prompt">充值金额：</span>
-        </el-col>
-        <el-col :span="3">
-          <el-radio v-model="rechargeAmount" label="10" border>10￥</el-radio>
-        </el-col>
-        <el-col :span="3">
-          <el-radio v-model="rechargeAmount" label="20" border>20￥</el-radio>
-        </el-col>
-        <el-col :span="3">
-          <el-radio v-model="rechargeAmount" label="50" border>50￥</el-radio>
-        </el-col>
-        <el-col :span="4">
-          <el-input v-model="customRechargeAmount" placeholder="其他金额..."></el-input>
-        </el-col>
-      </el-row>
-      <br/>
-      <br/>
-      <!--支付方式-->
-      <el-row type="flex">
-        <el-col :span="3">
-          <span class="font-small recharge-prompt">支付方式：</span>
-        </el-col>
-        <el-radio-group v-model="rechargeMethod">
-          <el-radio label="wechat">
-            <el-image :src="require('./images/wechatpay.png')"
-                      class="has-border"
-                      style="width: 100px; height: 30px"
-                      alt="微信支付"></el-image>
-          </el-radio>
-          <el-radio label="zfb">
-            <el-image :src="require('./images/zfbpay.png')"
-                      class="has-border"
-                      style="width: 100px; height: 30px"
-                      alt="微信支付"></el-image>
-          </el-radio>
-        </el-radio-group>
-      </el-row>
-      <br/>
-      <br/>
-      <!--应付金额-->
-      <el-row type="flex">
-        <el-col :span="24">
-          <span class="font-small recharge-prompt">应付金额：</span>
-          <span class="important-title"
-                style="margin-left: 2vw">{{paymentAmount|formatMoney}} 元</span>
-        </el-col>
-      </el-row>
+      <PaymentForm ref="paymentForm"></PaymentForm>
       <el-divider></el-divider>
       <!--底部支付栏-->
       <el-row>
@@ -115,60 +65,43 @@
       <!--利用v-if销毁来重建组件的生命周期，因为prop只会在生命周期开始时传递一次-->
       <PaymentDialog v-if="showPayment"
                      :show-payment.sync="showPayment"
-                     :type="rechargeMethod"></PaymentDialog>
+                     :type="paymentMethod"
+                     :amount="paymentAmount"></PaymentDialog>
     </div>
   </el-card>
 </template>
 
 <script>
   import PaymentDialog from '@/components/PaymentDialog'
+  import PaymentForm from '@/components/PaymentForm'
 
   export default {
     name: 'Payment',
-    components: { PaymentDialog },
-    filters: {
-      formatMoney (money) {
-        money = Number(money)
-        return money.toFixed(2)
-      }
-    },
+    components: { PaymentForm, PaymentDialog },
     data () {
       return {
         username: '测试账号',
         userAvatar: require('./images/avatar.jpg'),
         balance: 1000, // 余额
-        rechargeAmount: '10', // 充值金额
-        customRechargeAmount: '', // 自定义充值金额，分开是为了页面效果
-        rechargeMethod: '', // 支付方式
-        showPayment: false // 是否显示支付框
-      }
-    },
-    computed: {
-      // 应付金额，可能需要加个上限
-      // TODO: 超过一定量时会出现科学计数法，可能需要修改
-      paymentAmount () {
-        return this.customRechargeAmount ? this.customRechargeAmount : this.rechargeAmount
-      }
-    },
-    watch: {
-      customRechargeAmount (newVal) {
-        if (newVal) {
-          this.rechargeAmount = ''
-        }
+        showPayment: false, // 是否显示支付框
+        paymentAmount: 0,
+        paymentMethod: ''
       }
     },
     methods: {
       doPay () {
         // 调支付接口在支付框里
-        if (!this.rechargeAmount && !this.customRechargeAmount) {
-          this.$message.error('请选择充值金额')
-          return
-        }
-        if (!this.rechargeMethod) {
-          this.$message.error('请选择支付方式')
-          return
-        }
-        this.showPayment = true
+        // 获取应付金额和进行表单验证
+        const paymentForm = this.$refs['paymentForm']
+        this.paymentAmount = paymentForm.paymentAmount
+        this.paymentMethod = paymentForm.paymentMethod
+        paymentForm.$refs['paymentChildForm'].validate((valid) => {
+          if (valid) {
+            this.showPayment = true
+          } else {
+            return false
+          }
+        })
       }
     }
   }

@@ -2,6 +2,7 @@
   <el-dialog :visible.sync="dialogVisible"
              :before-close="handleDialogClose">
     <p>{{type}}</p>
+    <p>{{amount}}</p>
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="handleDialogClose">取 消</el-button>
@@ -16,7 +17,8 @@
     name: 'PaymentDialog',
     props: {
       showPayment: Boolean,
-      type: String
+      type: String,
+      amount: String
     },
     data () {
       return {
