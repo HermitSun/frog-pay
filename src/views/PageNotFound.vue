@@ -34,6 +34,7 @@
 <style scoped>
   .not-found {
     text-align: left;
+    margin-top: 6vw;
   }
 
   .not-found .not-found-prompt {
