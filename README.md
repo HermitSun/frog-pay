@@ -10,7 +10,7 @@
 
 - Vue（cli3 + router + Vuex）
 - Element-UI
-- 语言是加了babel的JS（ES6还是香啊）
+- 语言是加了babel的JS（ES2015+还是香啊）
 - 代码规范遵守vue-standard
 
 提前说一下，以免后续接手的人喷我。
