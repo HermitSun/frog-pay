@@ -3,7 +3,7 @@
     <template v-for="i in Number(interval)">
       <br :key="i"/>
     </template>
-    <p style="color:#C0C4CC">&copy;2019 弗灵格支付 by F.R.O.G</p>
+    <p style="color:#C0C4CC">&copy;2019 上海昱辰网络科技有限公司</p>
   </el-row>
 </template>
 

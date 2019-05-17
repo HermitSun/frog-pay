@@ -5,11 +5,11 @@ function resolve (dir) {
 }
 
 // 生产环境部署的路径
-const BASE_URL = process.env.NODE_ENV === 'production' ? '/frog-pay/' : '/'
+const BASE_URL = process.env.NODE_ENV === 'production' ? '/payment/' : '/'
 
 module.exports = {
   publicPath: BASE_URL,
-  outputDir: 'dist',
+  outputDir: 'payment',
   assetsDir: '', // 放置生成的静态资源路径，默认在outputDir
   indexPath: 'index.html', // 指定生成的 index.html 输入路径，默认outputDir
   pages: undefined,
